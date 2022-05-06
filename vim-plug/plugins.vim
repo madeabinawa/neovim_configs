@@ -2,8 +2,8 @@
 call plug#begin('~/.vim/plugged')
 
 " searching files
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 
 " Git related
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -11,28 +11,28 @@ Plug 'airblade/vim-gitgutter'
 
 "file explorer
 Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Snippets related plugins
 Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
-Plug 'natebosch/dartlang-snippets'
-Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdcommenter'
+" Plug 'natebosch/dartlang-snippets'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'scrooloose/nerdcommenter'
 
 " HTML emmet
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 
 " Syntax completion 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
-Plug 'rafi/awesome-vim-colorschemes'  
+" Plug 'rafi/awesome-vim-colorschemes'  
 
 
 Plug 'Yggdroot/indentLine' 
@@ -49,6 +49,7 @@ vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
 nnoremap <space>n :set norelativenumber<cr>
 nnoremap <space>rn :set relativenumber<cr>
+nnoremap <S-M-f> :Format<CR>
 
 set mouse=a
 set number
@@ -65,8 +66,10 @@ set clipboard=unnamedplus
 hi Normal ctermbg=none
 
 " open NERDTree automatically
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree
+augroup groups 
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * NERDTree
+augroup end
 
 let g:NERDTreeGitStatusWithFlags = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -155,9 +158,9 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-eslint', 
   \ 'coc-prettier', 
-   \ 'coc-json', 
-\ 'coc-flutter', 
-\ 'coc-yaml',
+  \ 'coc-json', 
+  \ 'coc-flutter', 
+  \ 'coc-yaml',
   \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
@@ -287,5 +290,6 @@ nnoremap <M-Right> :bn<cr>
 nnoremap <M-Left> :bp<cr>
 nnoremap <c-x> :bp \|bd #<cr>
 
-let g:ale_completion_enabled = 0
-let g:ale_linters = {'python': ['flake8', 'pylint'], 'javascript': ['eslint']}
+"let g:ale_completion_enabled = 0
+"let g:ale_linters = {'python': ['flake8', 'pylint'], 'javascript': ['eslint']}
+
