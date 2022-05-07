@@ -2,8 +2,8 @@
 call plug#begin('~/.vim/plugged')
 
 " searching files
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Git related
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -11,7 +11,7 @@ Plug 'airblade/vim-gitgutter'
 
 "file explorer
 Plug 'scrooloose/nerdtree'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Snippets related plugins
 Plug 'SirVer/ultisnips'
@@ -24,19 +24,18 @@ Plug 'mlaursen/vim-react-snippets'
 " Plug 'mattn/emmet-vim'
 
 " Syntax completion 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Yggdroot/indentLine' 
 " Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'pangloss/vim-javascript'      " JS Syntax
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
-" Plug 'rafi/awesome-vim-colorschemes'  
-
-
-Plug 'Yggdroot/indentLine' 
-Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'rafi/awesome-vim-colorschemes'  
 
 " Initialize plugin system
 call plug#end()
@@ -44,7 +43,7 @@ call plug#end()
 inoremap jj <ESC>
 nmap <C-e> :NERDTreeToggle<CR>
 imap <C-e> :NERDTreeToggle<CR>
-nnoremap <C-p>  <cmd>Telescope find_files<cr>  
+nnoremap <C-p> :FZF<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
 nnoremap <space>n :set norelativenumber<cr>
@@ -54,7 +53,6 @@ nnoremap <S-M-f> :Format<CR>
 set mouse=a
 set number
 set hidden
-set cursorline
 set expandtab
 set autoindent
 set smartindent
@@ -63,7 +61,12 @@ set tabstop=4
 set encoding=utf8
 set history=5000
 set clipboard=unnamedplus
-hi Normal ctermbg=none
+" set cursorline
+
+" setting to improve syntax highlighting
+syntax sync minlines=256
+set nocursorcolumn
+set nocursorline
 
 " open NERDTree automatically
 augroup groups 
@@ -71,23 +74,27 @@ augroup groups
     autocmd VimEnter * NERDTree
 augroup end
 
+let g:NERDTreeLimitedSyntax = 1
 let g:NERDTreeGitStatusWithFlags = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:NERDTreeGitStatusNodeColorization = 1
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'M',
-                \ 'Staged'    :'✚',
+                \ 'Staged'    :'St',
                 \ 'Untracked' :'U',
-                \ 'Renamed'   :'➜',
+                \ 'Renamed'   :'R',
                 \ 'Unmerged'  :'═',
                 \ 'Deleted'   :'D',
-                \ 'Dirty'     :'✗',
+                \ 'Dirty'     :'*',
                 \ 'Ignored'   :'☒',
-                \ 'Clean'     :'✔︎',
+                \ 'Clean'     :'C',
                 \ 'Unknown'   :'?',
                 \ }
 
 let g:NERDTreeIgnore = ['^node_modules$']
+
+" Window preview fuzzy finder
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
 " vim-prettier
 "let g:prettier#quickfix_enabled = 0
@@ -102,6 +109,12 @@ let g:prettier#autoformat = 0
 let g:dart_format_on_save = 1
 let g:dartfmt_options = ['--fix', '--line-length 120']
 
+"JS configuration syntax
+let g:javascript_plugin_jsdoc = 1   " Enable syntax highlighting for jsDocs
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
 
 " j/k will move virtual lines (lines that wrap)
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -229,11 +242,11 @@ augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-" Update signature help on jump placeholder
+  " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
@@ -282,14 +295,13 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_statusline_ontop=0
-" let g:airline_theme='base16_twilight'
 
 let g:airline#extensions#tabline#formatter = 'default'
-" navegação entre os buffers
-nnoremap <M-Right> :bn<cr>
+
+let g:ale_completion_enabled = 0
+let g:ale_linters = {'javascript': ['eslint']}
+
+" Navigating between buffers using Alt + arrow
+nnoremap <M-Right> :bn<cr>  
 nnoremap <M-Left> :bp<cr>
 nnoremap <c-x> :bp \|bd #<cr>
-
-"let g:ale_completion_enabled = 0
-"let g:ale_linters = {'python': ['flake8', 'pylint'], 'javascript': ['eslint']}
-
