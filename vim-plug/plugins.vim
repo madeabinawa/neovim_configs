@@ -4,24 +4,28 @@ call plug#begin('~/.vim/plugged')
 " searching files
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Plug 'dyng/ctrlsf.vim'
 
 " Git related
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+hellow owordalskdj
 
 "file explorer
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'voldikss/vim-floaterm'
 
 " Snippets related plugins
 Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
 " Plug 'natebosch/dartlang-snippets'
-" Plug 'sheerun/vim-polyglot'
-" Plug 'scrooloose/nerdcommenter'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
 
 " HTML emmet
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 " Syntax completion 
 Plug 'Yggdroot/indentLine' 
@@ -49,6 +53,9 @@ nmap ++ <plug>NERDCommenterToggle
 nnoremap <space>n :set norelativenumber<cr>
 nnoremap <space>rn :set relativenumber<cr>
 nnoremap <S-M-f> :Format<CR>
+nnoremap <C-S-j> :FloatermNew<CR>
+nnoremap <C-j> :FloatermToggle<CR>
+noremap <C-Z> u
 
 set mouse=a
 set number
@@ -56,14 +63,14 @@ set hidden
 set expandtab
 set autoindent
 set smartindent
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set encoding=utf8
 set history=5000
 set clipboard=unnamedplus
 " set cursorline
 
-" setting to improve syntax highlighting
+" config to improve syntax highlighting
 syntax sync minlines=256
 set nocursorcolumn
 set nocursorline
@@ -74,6 +81,8 @@ augroup groups
     autocmd VimEnter * NERDTree
 augroup end
 
+" let g:NERDTreeIgnore = ['^node_modules$']
+let g:NERDTreeShowHidden = 1
 let g:NERDTreeLimitedSyntax = 1
 let g:NERDTreeGitStatusWithFlags = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -91,23 +100,22 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unknown'   :'?',
                 \ }
 
-let g:NERDTreeIgnore = ['^node_modules$']
+" Code Folding 
+set foldmethod=indent
+set foldexpr=nvim_treesitter#foldexpr()
+ "Prevent auto folding line on write buffer
+autocmd BufReadPost,FileReadPost * normal zR 
 
-" Window preview fuzzy finder
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-
-" vim-prettier
-"let g:prettier#quickfix_enabled = 0
-"let g:prettier#quickfix_auto_focus = 0
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-" run prettier on save
+
+" disable run prettier on save
 let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 " Dart configuration snippets
-let g:dart_format_on_save = 1
-let g:dartfmt_options = ['--fix', '--line-length 120']
+"let g:dart_format_on_save = 1
+"let g:dartfmt_options = ['--fix', '--line-length 120']
 
 "JS configuration syntax
 let g:javascript_plugin_jsdoc = 1   " Enable syntax highlighting for jsDocs
@@ -120,8 +128,11 @@ augroup END
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
+nnoremap <C-M-q> :BufOnly<CR>
+nnoremap <C-q> :wq<CR>
 nnoremap <C-s> :w<CR>
-nnoremap <C-Q> :wq<CR>
+inoremap <C-s> <Esc> :w<CR>
+inoremap <C-q> <Esc> :wq<CR>
 
 " shift+arrow shortcut selection in normal, visual and insert
 nmap <S-Up> v<Up>
@@ -147,12 +158,12 @@ set cindent
 colorscheme codedark
 
 " sync open file with NERDTree
-" " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
+" check if NERDTree is open or active
+"function! IsNERDTreeOpen()        
+"  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+"endfunction
 
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" call NERDTreeFind iff NERDTree is active, current window contains a modifiable
 " file, and we're not in vimdiff
 function! SyncTree()
   if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
@@ -162,7 +173,7 @@ function! SyncTree()
 endfunction
 
 " Highlight currently open buffer in NERDTree
-" autocmd BufEnter * call SyncTree()
+"autocmd BufEnter * call SyncTree()
 
 " coc config
 let g:coc_global_extensions = [
@@ -172,12 +183,11 @@ let g:coc_global_extensions = [
   \ 'coc-eslint', 
   \ 'coc-prettier', 
   \ 'coc-json', 
-  \ 'coc-flutter', 
-  \ 'coc-yaml',
+"  \ 'coc-flutter', 
+"  \ 'coc-yaml',
   \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
-set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
 " don't give |ins-completion-menu| messages.
@@ -188,23 +198,23 @@ set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugn.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+"function! s:check_back_space() abort
+"  let col = col('.') - 1
+"  return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+"inoremap <silent><expr> <C-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_nfo()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -229,7 +239,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
@@ -298,10 +308,13 @@ let g:airline_statusline_ontop=0
 
 let g:airline#extensions#tabline#formatter = 'default'
 
-let g:ale_completion_enabled = 0
-let g:ale_linters = {'javascript': ['eslint']}
+" let g:ale_completion_enabled = 0
+" let g:ale_linters = {'javascript': ['eslint']}
 
 " Navigating between buffers using Alt + arrow
 nnoremap <M-Right> :bn<cr>  
 nnoremap <M-Left> :bp<cr>
 nnoremap <c-x> :bp \|bd #<cr>
+
+" Vim Commentary config
+" autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
