@@ -6,6 +6,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 " Plug 'dyng/ctrlsf.vim'
 
+" Discord presence
+Plug 'andweeb/presence.nvim'
+
 " Git related
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
@@ -41,7 +44,6 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'rafi/awesome-vim-colorschemes'  
 
 Plug 'tpope/vim-surround'
-
 " Initialize plugin system
 call plug#end()
 
@@ -62,9 +64,14 @@ nnoremap <space>rn :set relativenumber<cr>
 nnoremap <C-f> :Format<CR>
 nnoremap <C-S-j> :FloatermNew<CR>
 nnoremap <C-j> :FloatermToggle<CR>
+nnoremap <C-w>r :set cmdheight=1 <bar> horizontal resize +100<CR> 
+
+"https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 set mouse=a
 set number
+set relativenumber
 set hidden
 set expandtab
 set autoindent
@@ -137,6 +144,7 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <C-M-q> :BufOnly<CR>
 nnoremap <C-q> :wq<CR>
 nnoremap <C-s> :w<CR>
+nnoremap <C-k>w :bufdo bd<CR>
 inoremap <C-s> <Esc> :w<CR>
 inoremap <C-q> <Esc> :wq<CR>
 
@@ -317,13 +325,23 @@ let g:airline_statusline_ontop=0
 
 let g:airline#extensions#tabline#formatter = 'default'
 
+let g:presence_show_time = 0
+let g:presence_buttons = 0
+let g:presence_workspace_text = "Writing bugs 🪲 on  %s"
+let g:presence_neovim_image_text   = "Awesome text editor for awesome people 👀"
+let g:presence_blacklist           = ["/Users/abinavva/Practice"]
+
 " let g:ale_completion_enabled = 0
 " let g:ale_linters = {'javascript': ['eslint']}
 
 " Navigating between buffers using Alt/Ctrl + arrow
-nnoremap <c-.> :bn<cr>  
-nnoremap <c-,> :bp<cr>
+nnoremap <C-.> :bn<CR>  
+nnoremap <C-,> :bp<CR>
 nnoremap <c-x> :bp \|bd #<cr>
+
+hi! CocErrorSign guifg=#d1666a
+" hi! CocInfoSign guibg=#353b45
+" hi! CocWarningSign guifg=#d1cd66
 
 " Vim Commentary config
 " autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
