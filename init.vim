@@ -9,10 +9,14 @@ Plug 'junegunn/fzf.vim'
 " Discord presence
 Plug 'andweeb/presence.nvim'
 
+" ai copilot
+Plug 'Exafunction/codeium.vim'
+
 " Git related
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'APZelos/blamer.nvim'
 
 "file explorer
 Plug 'scrooloose/nerdtree'
@@ -29,12 +33,21 @@ Plug 'tpope/vim-commentary'
 " HTML emmet
 Plug 'mattn/emmet-vim'
 
+"Markdown related
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
+
 " Syntax completion 
 Plug 'Yggdroot/indentLine' 
 " Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'pangloss/vim-javascript'      " JS Syntax
+
+"Dart & Flutter
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'
@@ -50,11 +63,14 @@ call plug#end()
 inoremap jj <ESC>
 nmap <C-b> :NERDTreeToggle<CR>
 imap <C-b> :NERDTreeToggle<CR>
-nmap <C-e> :NERDTreeFind<CR>
-imap <C-e> :NERDTreeFind<CR>
+nmap <C-e>j :NERDTreeFind<CR>
+imap <C-e>j :NERDTreeFind<CR>
+nmap <C-e>k :NERDTreeFind<CR>
+imap <C-e>k :NERDTreeFind<CR>
 
 let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git -o -name build \) -prune -o -print'
 nnoremap <C-p> :FZF<CR>
+nnoremap <C-l> :Rg<CR>
 nnoremap <space>p :Buffers<cr>
 
 vmap ++ <plug>NERDCommenterToggle
@@ -62,8 +78,8 @@ nmap ++ <plug>NERDCommenterToggle
 nnoremap <space>n :set norelativenumber<cr>
 nnoremap <space>rn :set relativenumber<cr>
 nnoremap <C-f> :Format<CR>
-nnoremap <C-S-j> :FloatermNew<CR>
-nnoremap <C-j> :FloatermToggle<CR>
+"nnoremap <C-S-j> :FloatermNew<CR>
+"nnoremap <C-j> :FloatermToggle<CR>
 nnoremap <C-w>r :set cmdheight=1 <bar> horizontal resize +100<CR> 
 
 "https://vim.fandom.com/wiki/Search_for_visually_selected_text
@@ -198,7 +214,8 @@ let g:coc_global_extensions = [
   \ 'coc-eslint', 
   \ 'coc-html',
   \ 'coc-css',
-  \ 'coc-json']
+  \ 'coc-json',
+  \ 'coc-prisma']
 "  \ 'coc-prettier', 
 "  \ 'coc-flutter', 
 "  \ 'coc-yaml',
@@ -329,7 +346,8 @@ let g:presence_show_time = 0
 let g:presence_buttons = 0
 let g:presence_workspace_text = "Writing bugs 🪲 on  %s"
 let g:presence_neovim_image_text   = "Awesome text editor for awesome people 👀"
-let g:presence_blacklist           = ["/Users/abinavva/Practice"]
+let g:presence_blacklist           = ["/Users/abinavva/Practice","/Users/abinavva/Works/Sideproject"]
+
 
 " let g:ale_completion_enabled = 0
 " let g:ale_linters = {'javascript': ['eslint']}
