@@ -4,7 +4,6 @@ call plug#begin('~/.vim/plugged')
 " searching files
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'dyng/ctrlsf.vim'
 
 " Discord presence
 Plug 'andweeb/presence.nvim'
@@ -21,12 +20,10 @@ Plug 'APZelos/blamer.nvim'
 "file explorer
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'voldikss/vim-floaterm'
 
 " Snippets related plugins
 Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
-" Plug 'natebosch/dartlang-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 
@@ -42,6 +39,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'pangloss/vim-javascript'      " JS Syntax
+Plug 'axelvc/template-string.nvim'
 
 "Dart & Flutter
 Plug 'dart-lang/dart-vim-plugin'
@@ -78,9 +76,9 @@ nmap ++ <plug>NERDCommenterToggle
 nnoremap <space>n :set norelativenumber<cr>
 nnoremap <space>rn :set relativenumber<cr>
 nnoremap <C-f> :Format<CR>
-"nnoremap <C-S-j> :FloatermNew<CR>
-"nnoremap <C-j> :FloatermToggle<CR>
 nnoremap <C-w>r :set cmdheight=1 <bar> horizontal resize +100<CR> 
+nnoremap <C-j> :bp<CR>
+nnoremap <C-k> :bn<CR>
 
 "https://vim.fandom.com/wiki/Search_for_visually_selected_text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -129,22 +127,12 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unknown'   :'?',
                 \ }
 
-" Code Folding 
+"Code Folding 
 set foldmethod=indent
 set foldexpr=nvim_treesitter#foldexpr()
- "Prevent auto folding line on write buffer
+
+"Prevent auto folding line on write buffer
 autocmd BufReadPost,FileReadPost * normal zR 
-
-" prettier command for coc
-"command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" disable run prettier on save
-"let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
-
-" Dart configuration snippets
-"let g:dart_format_on_save = 1
-"let g:dartfmt_options = ['--fix', '--line-length 120']
 
 "JS configuration syntax
 let g:javascript_plugin_jsdoc = 1   " Enable syntax highlighting for jsDocs
@@ -160,7 +148,7 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <C-M-q> :BufOnly<CR>
 nnoremap <C-q> :wq<CR>
 nnoremap <C-s> :w<CR>
-nnoremap <C-k>w :bufdo bd<CR>
+nnoremap <space>kw :bufdo bd<CR>
 inoremap <C-s> <Esc> :w<CR>
 inoremap <C-q> <Esc> :wq<CR>
 
@@ -178,21 +166,8 @@ imap <S-Down> <Esc>v<Down>
 imap <S-Left> <Esc>v<Left>
 imap <S-Right> <Esc>v<Right>
 
-" map shortcut key for copy, cut, paste  
-"vmap <C-c> y<Esc>i
-"vmap <C-x> d<Esc>i
-"map <C-v> pi
-"imap <C-v> <Esc>pi
-
-
 set cindent
 colorscheme codedark
-
-" sync open file with NERDTree
-" check if NERDTree is open or active
-"function! IsNERDTreeOpen()        
-"  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-"endfunction
 
 " call NERDTreeFind iff NERDTree is active, current window contains a modifiable
 " file, and we're not in vimdiff
@@ -230,19 +205,6 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugn.
-"inoremap <silent><expr> <TAB>
-"      \ pumvisible() ? "\<C-n>" :
-"      \ <SID>check_back_space() ? "\<TAB>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-"function! s:check_back_space() abort
-"  let col = col('.') - 1
-"  return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <C-space> coc#refresh()
 
@@ -278,10 +240,6 @@ endfunction
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -289,15 +247,6 @@ augroup mygroup
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 xmap if <Plug>(coc-funcobj-i)
@@ -332,14 +281,11 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>i
 
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_statusline_ontop=0
-
 let g:airline#extensions#tabline#formatter = 'default'
 
 let g:presence_show_time = 0
@@ -361,5 +307,5 @@ hi! CocErrorSign guifg=#d1666a
 " hi! CocInfoSign guibg=#353b45
 " hi! CocWarningSign guifg=#d1cd66
 
-" Vim Commentary config
-" autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
+" Mapping to auto-replace quotes with backticks
+nnoremap <leader>b :%s/\(['"]\)\(.*\)\(['"]\)/`\2`/g<CR>
