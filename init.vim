@@ -26,6 +26,7 @@ Plug 'SirVer/ultisnips'
 Plug 'mlaursen/vim-react-snippets'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
+Plug 'honza/vim-snippets'
 
 " HTML emmet
 Plug 'mattn/emmet-vim'
@@ -46,6 +47,8 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'natebosch/vim-lsc'
 Plug 'natebosch/vim-lsc-dart'
+Plug 'natebosch/dartlang-snippets'
+
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'
@@ -190,10 +193,9 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-json',
-  \ 'coc-prisma']
-"  \ 'coc-prettier', 
-"  \ 'coc-flutter', 
-"  \ 'coc-yaml',
+  \ 'coc-prisma',
+  \ 'coc-flutter', 
+  \ 'coc-yaml',]
   
 " from readme
 " if hidden is not set, TextEdit might fail.
@@ -222,6 +224,9 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gl <Plug>(coc-codeaction-selected)
+nmap <silent> gl <Plug>(coc-codeaction-selected)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -294,6 +299,14 @@ let g:presence_workspace_text = "Writing bugs 🪲 on  %s"
 let g:presence_neovim_image_text   = "Awesome text editor for awesome people 👀"
 let g:presence_blacklist           = ["/Users/abinavva/Practice","/Users/abinavva/Works/Sideproject"]
 
+let g:dart_format_on_save = 1
+let g:flutter_show_log_on_run = 'tab'
+let g:flutter_insert_getter_setter = 1
+let g:flutter_complete_containers = 1
+let g:flutter_enable_snippets = 1
+let g:flutter_command = 'fvm flutter'
+let g:flutter_flavor = 'ios'
+let g:flutter_split_action = 'hidden'
 
 " let g:ale_completion_enabled = 0
 " let g:ale_linters = {'javascript': ['eslint']}
