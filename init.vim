@@ -48,7 +48,7 @@ Plug 'thosakwe/vim-flutter'
 Plug 'natebosch/vim-lsc'
 Plug 'natebosch/vim-lsc-dart'
 Plug 'natebosch/dartlang-snippets'
-
+Plug 'f-person/pubspec-assist-nvim'
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'

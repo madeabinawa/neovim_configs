@@ -9,15 +9,16 @@
   "tsserver.formatOnType": true,
   "coc.preferences.formatOnType": true,
   "coc.preferences.formatOnSaveFiletypes": [
-    // "javascript",
-    // "javascriptreact",
-    // "typescript",
-    // "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
     "json",
     "prisma"
   ],
   "prettier.jsxSingleQuote": false,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "snippets.ultisnips.pythonPrompt": false
 }
