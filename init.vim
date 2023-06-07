@@ -41,6 +41,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'pangloss/vim-javascript'      " JS Syntax
 Plug 'axelvc/template-string.nvim'
+Plug 'terryma/vim-multiple-cursors'
 
 "Dart & Flutter
 Plug 'dart-lang/dart-vim-plugin'
