@@ -309,6 +309,13 @@ let g:flutter_command = 'fvm flutter'
 let g:flutter_flavor = 'ios'
 let g:flutter_split_action = 'hidden'
 
+" Vim Flutter shortcuts
+nnoremap <space>fa :FlutterRun<CR>
+nnoremap <space>fq :FlutterQuit<CR>
+nnoremap <space>fr :FlutterHotReload<CR>
+nnoremap <space>fR :FlutterHotRestart<CR>
+nnoremap <space>fD :FlutterVisualDebug<CR>
+
 " let g:ale_completion_enabled = 0
 " let g:ale_linters = {'javascript': ['eslint']}
 
