@@ -16,9 +16,9 @@
     "json",
     "prisma"
   ],
+  "prettier.semi": false,
   "prettier.jsxSingleQuote": false,
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "all",
-  "snippets.ultisnips.pythonPrompt": false
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "all"
+  
 }

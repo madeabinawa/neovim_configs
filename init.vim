@@ -1,5 +1,9 @@
 " Specify a directory for plugins
+
 call plug#begin('~/.vim/plugged')
+
+" Icons
+Plug 'nvim-tree/nvim-web-devicons'
 
 " searching files
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -12,10 +16,10 @@ Plug 'andweeb/presence.nvim'
 Plug 'Exafunction/codeium.vim'
 
 " Git related
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'APZelos/blamer.nvim'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'tpope/vim-fugitive'
+" Plug 'APZelos/blamer.nvim'
 
 "file explorer
 Plug 'scrooloose/nerdtree'
@@ -44,19 +48,21 @@ Plug 'axelvc/template-string.nvim'
 Plug 'terryma/vim-multiple-cursors'
 
 "Dart & Flutter
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
-Plug 'natebosch/vim-lsc'
-Plug 'natebosch/vim-lsc-dart'
-Plug 'natebosch/dartlang-snippets'
-Plug 'f-person/pubspec-assist-nvim'
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'thosakwe/vim-flutter'
+" Plug 'natebosch/vim-lsc'
+" Plug 'natebosch/vim-lsc-dart'
+" Plug 'natebosch/dartlang-snippets'
+" Plug 'f-person/pubspec-assist-nvim'
 
 " Themes and icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
+" Plug 'arcticicestudio/nord-vim'
 Plug 'rafi/awesome-vim-colorschemes'  
+
 
 Plug 'tpope/vim-surround'
 " Initialize plugin system
@@ -172,6 +178,7 @@ imap <S-Right> <Esc>v<Right>
 
 set cindent
 colorscheme codedark
+" colorscheme nord 
 
 " call NERDTreeFind iff NERDTree is active, current window contains a modifiable
 " file, and we're not in vimdiff
